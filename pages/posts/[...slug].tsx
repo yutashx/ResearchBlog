@@ -9,7 +9,8 @@ import { getPostBySlug, getAllPosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
-import markdownToHtml from '../../lib/markdownToHtml'
+import 'zenn-content-css';
+import markdownToHtml from 'zenn-markdown-html'
 import PostType from '../../types/post'
 
 type Props = {
@@ -31,10 +32,10 @@ const Post = ({ post, morePosts, preview }: Props) => {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-            <article className="mb-32">
+            <article className="mb-32 znc">
               <Head>
                 <title>
-                  {post.title} | Next.js Blog Example with {CMS_NAME}
+                  {post.title}
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
@@ -57,7 +58,7 @@ export default Post
 
 type Params = {
   params: {
-    slug: string
+    slug: string[]
   }
 }
 
@@ -71,7 +72,7 @@ export async function getStaticProps({ params }: Params) {
     'ogImage',
     'coverImage',
   ])
-  const content = await markdownToHtml(post.content || '')
+  const content = await markdownToHtml(post.content as string|| '')
 
   return {
     props: {
@@ -84,13 +85,12 @@ export async function getStaticProps({ params }: Params) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug'])
-
+  const posts = getAllPosts()
   return {
     paths: posts.map((post) => {
       return {
         params: {
-          slug: post.slug,
+          slug: post
         },
       }
     }),
