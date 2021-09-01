@@ -41,7 +41,7 @@ export function getPostBySlug(slugArray: string[], fields: string[] = []) {
 }
 
 export const getAllPosts = () => {
-  const entries = glob.sync(`${postDirPrefix}/**/*.md`)
+  const entries = glob.sync(`${postDirPrefix}/**/**/*.md`) // ${postDirPrefix}/**/*.md dose not work for searching in the second level or more directories, and it supports by second
   return entries
     .map((file) => file.split(postDirPrefix).pop())
     .map((slug) => (slug as string).replace(/\.md$/, '').split('/'))
