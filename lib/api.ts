@@ -6,12 +6,22 @@ import matter from 'gray-matter'
 //const postsDirectory = process.cwd();
 const postDirPrefix = '_posts/'
 const postsDirectory = join(process.cwd(), postDirPrefix)
+const fields = [
+  'title',
+  'date',
+  'slug',
+  'author',
+  'content',
+  'ogImage',
+  'coverImage',
+  'tags',
+]
 
 export function getPostSlugs() {
   return fs.readdirSync(postsDirectory)
 }
 
-export function getPostBySlug(slugArray: string[], fields: string[] = []) {
+export function getPostBySlug(slugArray: string[]) {
   const matchedSlug = slugArray.join('/')
   const realSlug = matchedSlug.replace(/\.md$/, '')
   const fullPath = join(postsDirectory, `${realSlug}.md`)

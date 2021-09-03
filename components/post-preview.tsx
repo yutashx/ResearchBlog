@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import ArticleTags from './tags'
 
 type Props = {
   title: string
@@ -11,6 +12,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  tags: string[]
 }
 
 const PostPreview = ({
@@ -20,6 +22,7 @@ const PostPreview = ({
   excerpt,
   author,
   slug,
+  tags,
 }: Props) => {
   return (
     <div>
@@ -30,6 +33,9 @@ const PostPreview = ({
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
+      </div>
+      <div className="text-sm mb-4">
+        <ArticleTags tags={tags}></ArticleTags>
       </div>
     </div>
   )

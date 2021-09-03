@@ -6,6 +6,7 @@ type Props = {
 }
 
 const MoreStories = ({ posts }: Props) => {
+  console.log(`tag error article list: ${posts.map(p => p.tags? "ok": p.title)}`)
   return (
     <section>
       <h2 className="mb-8 text-3xl md:text-3xl font-bold tracking-tighter leading-tight">
@@ -21,6 +22,7 @@ const MoreStories = ({ posts }: Props) => {
             author={post.author}
             slug={post.slug}
             excerpt={post.excerpt}
+            tags={post.tags}
           />
         ))}
       </div>

@@ -23,7 +23,7 @@ const Index = ({ allPosts }: Props) => {
         <Container>
           <Intro />
           <div className="mb-8 md:mb-16">
-            <CoverImage title="lake" src="/assets/blog/images/hanabi.jpg" slug="" />
+            <CoverImage title="lake" src="/assets/blog/images/summer.jpg" slug="" />
           </div>
           {allPosts.length > 0 && <MoreStories posts={allPosts} />}
         </Container>
@@ -36,15 +36,8 @@ export default Index
 
 export const getStaticProps = async () => {
   const allSlugs = getAllPosts()
-  const allPosts = allSlugs.map((slugs) => getPostBySlug(slugs, [
-    'title',
-    'date',
-    'slug',
-    'author',
-    'coverImage',
-    'excerpt',
-  ]))    // sort posts by date in descending order
-  .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+  const allPosts = allSlugs.map((slugs) => getPostBySlug(slugs)) 
+  .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))   // sort posts by date in descending order
 
   return {
     props: { allPosts },
