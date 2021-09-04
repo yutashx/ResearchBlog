@@ -21,9 +21,10 @@ import { type } from 'os'
 
 type Props = {
   postsByTag: Post[]
+  tag: string
 }
 
-const TagIndex = ({ postsByTag }: Props) => {
+const TagIndex = ({ postsByTag, tag }: Props) => {
   const router = useRouter()
   console.log(`tag: ${postsByTag}`)
   if (!router.isFallback && !postsByTag?.every(item => item.slug)) {
@@ -40,7 +41,7 @@ const TagIndex = ({ postsByTag }: Props) => {
           <div className="mb-8 md:mb-16">
             <CoverImage title="lake" src="/assets/blog/images/fire.jpg" slug="" />
           </div>
-          {postsByTag.length > 0 && <MoreStories posts={postsByTag} />}
+          {postsByTag.length > 0 && <MoreStories posts={postsByTag} pageTitle={`Tag: ${tag}`}/>}
         </Container>
       </Layout>
     </>
@@ -56,11 +57,12 @@ type Params = {
 }
 
 export async function getStaticProps({ params }: Params) {
-  const postsByTag = getPostsByTag(params.tag)
+  const tag = params.tag
+  const postsByTag = getPostsByTag(tag)
   .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))   // sort posts by date in descending order
 
   return {
-    props: { postsByTag },
+    props: { postsByTag, tag},
   }
 }
 
