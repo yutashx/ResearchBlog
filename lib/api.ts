@@ -2,8 +2,12 @@ import fs from 'fs'
 import glob from 'glob'
 import { join } from 'path'
 import matter from 'gray-matter'
+import tag2path from  '../public/tags.json'
 
-//const postsDirectory = process.cwd();
+type Items = {
+  [key: string]: string | string[]
+}
+
 const postDirPrefix = '_posts/'
 const postsDirectory = join(process.cwd(), postDirPrefix)
 const fields = [
@@ -21,17 +25,28 @@ export function getPostSlugs() {
   return fs.readdirSync(postsDirectory)
 }
 
-export function getPostBySlug(slugArray: string[]) {
+export function getPostBySlug(slugArray: string[]):Items {
   const matchedSlug = slugArray.join('/')
+  const items:Items = getPost(matchedSlug)
+  
+  return items
+}
+
+export function getPostsByTag(tag: string):Items[] {
+  console.log(tag2path)
+  console.log(tag2path.CUDA)
+  const matchedSlugs:string[] = (tag2path as {[key:string]: string[]})[tag]
+  const items:Items[] = matchedSlugs.map(slug => getPost(slug))
+  
+  return items
+}
+
+function getPost(matchedSlug:string):Items{
+  // matchedSlug is relative path for articles with extension
   const realSlug = matchedSlug.replace(/\.md$/, '')
   const fullPath = join(postsDirectory, `${realSlug}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
-
-  type Items = {
-    [key: string]: string | string[]
-  }
-
   const items: Items = {}
 
   fields.forEach((field) => {

@@ -4,6 +4,7 @@ import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
 import { getAllPosts, getPostBySlug } from '../lib/api'
+import { generateTagsJson } from '../lib/tags'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../types/post'
@@ -38,6 +39,8 @@ export const getStaticProps = async () => {
   const allSlugs = getAllPosts()
   const allPosts = allSlugs.map((slugs) => getPostBySlug(slugs)) 
   .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))   // sort posts by date in descending order
+  
+  generateTagsJson(allPosts)
 
   return {
     props: { allPosts },
