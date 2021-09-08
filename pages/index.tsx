@@ -24,7 +24,7 @@ const Index = ({ allPosts }: Props) => {
         <Container>
           <Intro />
           <div className="mb-8 md:mb-16">
-            <CoverImage title="lake" src="/assets/blog/images/summer.jpg" slug="" />
+            <CoverImage title="lake" src="/assets/blog/images/ishinomaki_sea.jpg" slug="" />
           </div>
           {allPosts.length > 0 && <MoreStories posts={allPosts} pageTitle={`Latest Articles`}/>}
         </Container>
