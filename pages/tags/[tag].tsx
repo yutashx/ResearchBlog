@@ -39,7 +39,7 @@ const TagIndex = ({ postsByTag, tag }: Props) => {
         <Container>
           <Intro />
           <div className="mb-8 md:mb-16">
-            <CoverImage title="lake" src="/assets/blog/images/fire.jpg" slug="" />
+            <CoverImage title="lake" src="/assets/images/fire.jpg" slug="" />
           </div>
           {postsByTag.length > 0 && <MoreStories posts={postsByTag} pageTitle={`Tag: ${tag}`}/>}
         </Container>
