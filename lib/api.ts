@@ -33,8 +33,6 @@ export function getPostBySlug(slugArray: string[]):Items {
 }
 
 export function getPostsByTag(tag: string):Items[] {
-  console.log(tag2path)
-  console.log(tag2path.CUDA)
   const matchedSlugs:string[] = (tag2path as {[key:string]: string[]})[tag]
   const items:Items[] = matchedSlugs.map(slug => getPost(slug))
   
